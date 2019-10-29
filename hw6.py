@@ -1,14 +1,14 @@
 from typing import List, Tuple, Optional
 
 
-def bounds(array: List[float], target: [float]) -> Optional[Tuple[int, int]]:
+def bounds(array: List[float], target: float) -> Optional[Tuple[int, int]]:
     left, right = left_bound(array, target), right_bound(array, target)
     if left is None or right is None:
         return None
-    return (left, right)
+    return left, right
 
 
-def left_bound(array: List[float], target: [float]) -> Optional[int]:
+def left_bound(array: List[float], target: float) -> Optional[int]:
     if not array:
         return None
 
@@ -27,7 +27,7 @@ def left_bound(array: List[float], target: [float]) -> Optional[int]:
     return 0
 
 
-def right_bound(array: List[float], target: [float]) -> Optional[int]:
+def right_bound(array: List[float], target: float) -> Optional[int]:
     if not array:
         return None
 
@@ -39,7 +39,7 @@ def right_bound(array: List[float], target: [float]) -> Optional[int]:
         else:
             upper = mid
 
-    if upper <= 0 or lower >= len(array):
+    if upper <= 0 or lower > len(array):
         return None
     if array[lower-1] == target:
         return lower-1
@@ -51,3 +51,5 @@ def tests() -> None:
     assert bounds([1.5, 2.3, 2.3, 5.1], 1.5) == (0, 0)
     assert bounds([1.5, 2.3, 2.3, 5.1], 10) is None
     assert bounds([1.5, 2.3, 2.3, 2.3, 2.3, 2.3, 2.3, 2.3, 5.1], 2.3) == (1, 7)
+    assert bounds([], 1.2) is None
+    assert bounds([2.3, 2.3, 2.3, 2.3], 2.3) == (0, 3)
